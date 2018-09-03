@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="utf-8">
+	<meta charset=utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Reciclar Colima</title>
 	<link rel="stylesheet" href="styles.css" />
@@ -19,32 +19,35 @@
 </div>
 
 <br><br>
-<ul class="nav justify-content-center">
+
 
 <?php 
+header('Content-Type: text/html; charset=UTF-8');
 $servername = "localhost";
-$username = "id3122298_acazarez";
-$password = "iloverecicle";
+$username = "root";
+$password = "";
 $dbname = "id3122298_recicle";
 $conn = new mysqli($servername, $username, $password, $dbname);
+?>
 
-// Check connection
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
+<div align="center">
 
-$queryMateriales = $conn->query("SELECT MaterialName FROM RECYCLABLE_MATERIAL;");
+<?
+$queryMateriales = $conn->query("SELECT * FROM RECYCLABLE_MATERIAL ORDER BY MaterialName ASC;");
 
 if ($queryMateriales->num_rows > 0) {
 	while($row = $queryMateriales->fetch_assoc()) {
 ?>
-	<li class="nav-item">
-    	<a class="nav-link" href="#"> <?=$row["MaterialName"]?>  </a>
-  	</li>
+	    	<button type="button" 
+                class="btn btn-outline-success" 
+                id="<?php echo $row["MaterialID"]; ?>"
+                onclick="mostrarEntidades(this)"> <?=$row["MaterialName"]?>  
+        </button>
+
 <?php
 	}
 } ?>
-</ul>
+</div>
 <br>
 
 <div class="row"> 
@@ -82,8 +85,9 @@ if ($queryMateriales->num_rows > 0) {
   </div>
 
 
+  
+  
   <div class="col">
-
     <div class="row">
       <div class="col-8" id="datos-ent">
         <label class="nombre-ent"> Recicladora Bruxeco </label><br>
@@ -96,9 +100,16 @@ if ($queryMateriales->num_rows > 0) {
     </div>
     <br>
   </div>
+
 </div>
 
 <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"></script>
+<script>
+  function mostrarEntidades(material) {
+      alert(material.id)
+
+  }
+</script>
 
 </body>
 </html>

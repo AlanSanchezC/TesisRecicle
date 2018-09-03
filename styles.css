@@ -7,8 +7,12 @@ body {
 }
 
 ul{
-	border: solid 1px black;
 	margin-left: 10px;
+}
+
+button{
+	margin-left: 5px !important;
+	margin-top: 5px !important;
 }
 
 .filtro{
