@@ -1,0 +1,44 @@
+body {
+	font-family: 'Helvetica';
+}
+
+.encabezado {
+	height: 80px;
+}
+
+ul{
+	border: solid 1px black;
+	margin-left: 10px;
+}
+
+.filtro{
+	padding: 20px;
+	font-size: 15px;
+	border: solid 1px green;
+}
+
+.row{
+	width: 100%;
+}
+
+.col-2{
+	margin-left: 10px;
+}
+
+#datos-ent{
+	border: solid 1px green;
+}
+
+#mapa-ent{
+	border: solid 1px green;
+}
+
+.nombre-ent {
+	font-size: 25px;
+	font-weight: bolder;
+}
+
+.detalles-ent{
+	margin-left: 20px;
+	color: green;	
+}
