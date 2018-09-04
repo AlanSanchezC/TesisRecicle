@@ -96,6 +96,7 @@ if ($queryMateriales->num_rows > 0) {
         <label class="detalles-ent"> Teléfono: </label> Teléfono 1<br>
         <label class="detalles-ent"> Horario: </label> Horario 1<br>
         <label class="detalles-ent"> Página web: </label> PaginaWeb.com<br>
+        <label class="detalles-ent"> Ejemplo: </label> PaginaWeb.com<br>
       </div>
     </div>
     <br>
