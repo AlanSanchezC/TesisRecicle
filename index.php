@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset=utf-8" />
+	<meta charset="iso-8859-1" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Reciclar Colima</title>
 	<link rel="stylesheet" href="styles.css" />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" />
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
 
@@ -22,7 +22,7 @@
 
 
 <?php 
-header('Content-Type: text/html; charset=UTF-8');
+header('Content-Type: text/html; charset=iso-8859-1');
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -40,8 +40,7 @@ if ($queryMateriales->num_rows > 0) {
 ?>
 	    	<button type="button" 
                 class="btn btn-outline-success" 
-                id="<?php echo $row["MaterialID"]; ?>"
-                onclick="mostrarEntidades(this)"> <?=$row["MaterialName"]?>  
+                id="<?php echo $row["MaterialID"]; ?>"> <?=$row["MaterialName"]?>  
         </button>
 
 <?php
@@ -50,7 +49,7 @@ if ($queryMateriales->num_rows > 0) {
 </div>
 <br>
 
-<div class="row"> 
+<div class="row" style="display:none"> 
   <div class="col-2">
     <form class="filtro">
       Municipio <br>
@@ -69,10 +68,10 @@ if ($queryMateriales->num_rows > 0) {
         <br><br>
       
 
-        <label>¿Recompensa? </label><br>
+        <label> ¿Recompensa? </label><br>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">Sí</label>
+          <label class="form-check-label" for="inlineRadio1">S&iacute;</label>
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
@@ -81,35 +80,50 @@ if ($queryMateriales->num_rows > 0) {
         <br><br>
         <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
-
   </div>
-
-
-  
-  
-  <div class="col">
-    <div class="row">
-      <div class="col-8" id="datos-ent">
-        <label class="nombre-ent"> Recicladora Bruxeco </label><br>
-        <label class="detalles-ent"> Materiales: </label> a, b ,c ,d ,e ...  <br>
-        <label class="detalles-ent"> Dirección: </label> Dirección 1<br>
-        <label class="detalles-ent"> Teléfono: </label> Teléfono 1<br>
-        <label class="detalles-ent"> Horario: </label> Horario 1<br>
-        <label class="detalles-ent"> Página web: </label> PaginaWeb.com<br>
-        <label class="detalles-ent"> Ejemplo: </label> PaginaWeb.com<br>
-      </div>
-    </div>
-    <br>
-  </div>
-
 </div>
 
-<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"></script>
-<script>
-  function mostrarEntidades(material) {
-      alert(material.id)
+<p id="resultados"> </p>
 
-  }
+ 
+<script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"></script>
+<script charset="ISO-8859-1">
+$("button").click(function() {
+
+    //Evento cuando se da click en un botón, solo uno esta "activo"
+    $(this).addClass('active')
+    .siblings('[type="button"]')
+        .removeClass('active').addClass('btn-smallD');
+
+    //Búsqueda de entidades por material
+    $.ajax({
+      url: "getdata.php",
+      type: "POST",
+      data: { "MaterialID": $(this).attr('id')},
+      dataType: "json",
+      success: function(entidad){ 
+        var contenido = document.getElementById('resultados');
+        contenido.innerHTML = "";
+
+        for(var i in entidad){
+          var s = "<div class=\"row\"> "+
+                    " <div class=\"col-6\" id=\"datos-ent\"> "+
+                      " <label class=\"nombre-ent\">" + (entidad[i]['Name']) + "</label><br> " +
+                      " <label class=\"detalles-ent\"> Direcci&oacute;n: </label>" + (entidad[i]['Address'])+ "<br> "+
+                      " <label class=\"detalles-ent\"> Tel&eacute;fono: </label>" + (entidad[i]['Telephone']) + "<br> "+
+                      " <label class=\"detalles-ent\"> Horario: </label>" + (entidad[i]['Schedule']) + "<br> "+
+                      " <label class=\"detalles-ent\"> Municipio: </label>" + (entidad[i]['Town']) + "<br> "+
+                      " <label class=\"detalles-ent\"> Servicio: </label>" + (entidad[i]['ServiceName']) + "<br> "+
+                      " <label class=\"detalles-ent\"> P&aacute;gina web: </label>" + (entidad[i]['WebPage']) + "<br> "+
+                    " </div> "+
+                  " </div><br>";
+          contenido.innerHTML = contenido.innerHTML + s;
+        }
+      }
+    }); 
+
+
+  });
 </script>
 
 </body>
