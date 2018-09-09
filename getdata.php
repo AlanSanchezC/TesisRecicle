@@ -14,12 +14,8 @@ $query = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialName, IN
               " INNER JOIN RECYCLABLE_MATERIAL ON SERVICE.MaterialID = RECYCLABLE_MATERIAL.MaterialID " .
               " INNER JOIN INSTITUTION ON SERVICE.InstitutionID = INSTITUTION.InstitutionID " .
               " WHERE SERVICE.MaterialID = ".$_POST["MaterialID"].";");
-	
-	
-	$i = 0;
-	$arr = array();
-	$entidad = array();
 
+	$arr = array();
 
       	while($row = $query->fetch_assoc()) {
     		
@@ -30,10 +26,9 @@ $query = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialName, IN
 					"Telephone" => utf8_encode($row["Telephone"]),
 					"Town" => utf8_encode($row["Town"]),
 					"ServiceName" => utf8_encode($row["ServiceName"]),
-					"WebPage" => utf8_encode($row["WebPage"])
+					"WebPage" => utf8_encode($row["WebPage"]),
+					"MaterialName" => utf8_encode($row["MaterialName"])
     		);
-    		//print_r($arr);
-    		$i++;
 		}
 	
 	echo json_encode($arr)

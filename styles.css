@@ -1,36 +1,55 @@
 body {
 	font-family: 'Helvetica';
+	background-color: #c1f0c1 ;
 }
 
-.encabezado {
-	height: 80px;
+.titulo {
+	display: block;
+	text-align: center;
+	font-size: 50px;
 }
 
 ul{
 	margin-left: 10px;
 }
 
+
 button{
 	margin-left: 5px !important;
 	margin-top: 5px !important;
 }
 
+#material-actual{
+	text-align: center;
+	font-size: 30px;
+	letter-spacing: 4px;
+	color: darkgreen;
+}
+
+tr {
+	align: top;
+}
+
+td:first-child{
+	border-spacing: 1;
+}
+
 .filtro{
+	background-color: white;
 	padding: 20px;
 	font-size: 15px;
-	border: solid 1px green;
+	border: solid 2px green;
+	margin-left: 20px;
 }
 
 .row{
 	width: 100%;
 }
 
-#resultados{
-	margin-left: 40px;
-}
 
-#datos-ent{
-	border: solid 1px green;
+.datos-ent{
+	border: solid 2px green;
+	background-color: white;
 }
 
 #mapa-ent{
@@ -38,8 +57,10 @@ button{
 }
 
 .nombre-ent {
+	margin-left: 20px;
 	font-size: 25px;
 	font-weight: bolder;
+	line-height: 2;
 }
 
 .detalles-ent{
