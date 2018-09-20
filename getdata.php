@@ -1,15 +1,11 @@
 <?php
 header("Content-Type: application/json; charset=utf-8");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "id3122298_recicle";
-$connect = new mysqli($servername, $username, $password, $dbname);
+require('config/db.php');
 
 // ************  Búsqueda de entidades por material reciclable en tabla Servicio
 
-$query = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialName, INSTITUTION.* " .
+$queryTodas = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialName, INSTITUTION.* " .
               " FROM SERVICE " .
               " INNER JOIN RECYCLABLE_MATERIAL ON SERVICE.MaterialID = RECYCLABLE_MATERIAL.MaterialID " .
               " INNER JOIN INSTITUTION ON SERVICE.InstitutionID = INSTITUTION.InstitutionID " .
@@ -17,7 +13,7 @@ $query = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialName, IN
 
 	$arr = array();
 
-      	while($row = $query->fetch_assoc()) {
+      	while($row = $queryTodas->fetch_assoc()) {
     		
     		$arr[] =  array(
     				"InstitutionID" => utf8_encode($row["InstitutionID"]),
@@ -28,7 +24,8 @@ $query = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialName, IN
 					"Town" => utf8_encode($row["Town"]),
 					"ServiceName" => utf8_encode($row["ServiceName"]),
 					"WebPage" => utf8_encode($row["WebPage"]),
-					"MaterialName" => utf8_encode($row["MaterialName"])
+					"MaterialName" => utf8_encode($row["MaterialName"]),
+					"Geolocation" => utf8_encode($row["Geolocation"])
     		);
 		}
 	
