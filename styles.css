@@ -4,8 +4,8 @@ body {
 
 .details, .details-geo{
 	display: inline-block;
-  	vertical-align: middle;
 }
+
 
 .titulo {
 	display: block;

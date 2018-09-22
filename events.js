@@ -1,4 +1,5 @@
 var entidades = {};
+var clicked = false;
   
 $(document).ready(function() {
   ///////////////Evento que se ejecuta al dar click en un botón del menú de filtro
@@ -20,8 +21,6 @@ $(document).ready(function() {
       s = "RECOGE";
     }
   });
-
-
 
   ///////////////Evento que se ejecuta al dar click en un botón de algún material en la barra superior
 
@@ -54,21 +53,9 @@ $(document).ready(function() {
 
           for(var i in entidad){
 
-            var s = "<div class=\"datos-ent\" onClick=\"verEntidad(" + i + ")\" id=\"" + (entidad[i]['InstitutionID'])  + "\" >"+
+            var s = "<div class=\"datos-ent\" onClick=\"verEntidad(" + i + ", this)\" id=\"ee" + (entidad[i]['InstitutionID'])  + "\" >"+
                           "<label class=\"nombre-ent\"> " + (entidad[i]['Name']) + "</label> " +
-                          "<table>" +
-                            "<tr><td><label class=\"detalles-ent\"> Direcci&oacute;n: </label> </td> <td> <label>" + 
-                            (entidad[i]['Address'])+ "</td></tr> "+
-                            "<tr><td><label class=\"detalles-ent\"> Municipio: </label></td><td> <label>" + 
-                            (entidad[i]['Town']) + "</td><br> "+
-                            "<tr><td><label class=\"detalles-ent\"> Tel&eacute;fono: </label></td><td><label>" + 
-                            (entidad[i]['Telephone']) + "</td></tr> "+
-                            "<tr><td><label class=\"detalles-ent\"> Horario: </label></td><td><label>" + 
-                            (entidad[i]['Schedule']) + "</td></tr>"+
-                            //" <label class=\"detalles-ent\"> Servicio: </label>" + (entidad[i]['ServiceName']) + "<br> "+
-                            "<tr><td><label class=\"detalles-ent\"> P&aacute;gina web: </label> </td><td><label>" + 
-                            (entidad[i]['WebPage']) + "</td></tr> "+
-                          "</table>" + 
+                          
                       "</div>"+
                     " <br>";
             contenido.innerHTML = contenido.innerHTML + s;
@@ -82,30 +69,33 @@ $(document).ready(function() {
 });
 
 ///////////////Evento onClick para ver los detalles de una entidad
-function verEntidad(idEntidadSeleccionada){
-    var datos = entidades[idEntidadSeleccionada];
-    console.log(JSON.stringify(datos, null, 2))
-    var myWindow = window.open("", "_blank");
 
-    var s = "<html><head><title>" + unescape(datos["Name"]) + "</title><link rel=\"stylesheet\" href=\"styles.css\" /></head>"; 
-    s += "<body><label class=\"titulo\">"+ datos["Name"] + "</label> <br><br>";
-    
-    s += "<div class=\"details-geo\">" + (datos['Geolocation']) + "</div>" +
-      "<div class=\"details\"><label class=\"detalles-ent\"> Direcci&oacute;n: </label> " + 
-      (datos['Address'])+ "<br>"+
-      "<label class=\"detalles-ent\"> Municipio: </label> " + 
-      (datos['Town']) + "<br>"+
-      "<label class=\"detalles-ent\"> Tel&eacute;fono: </label> " + 
-      (datos['Telephone']) + "<br>"+
-      "<label class=\"detalles-ent\"> Horario: </label> " + 
-      (datos['Schedule']) + "<br>"+
-      "<label class=\"detalles-ent\"> P&aacute;gina web :</label> " + 
-      (datos['WebPage']) + "</div>";
-
-    
-    //////////Aqui se va a agregar el mapa
-    
-    myWindow.document.write(s);
-
-
+function verEntidad(idEntidadSeleccionada, divSeleccionado){
+    var d = divSeleccionado.id;
+    if (!clicked){
+      var datos = entidades[idEntidadSeleccionada];
+      
+      //Se muestran los detalles y el iframe con el mapa
+      var s = 
+              "<div><table>" +
+                "<tr><td><label class=\"detalles-ent\"> Direcci&oacute;n: </label> </td> <td> <label>" + 
+                (datos['Address'])+ "</td></tr> "+
+                "<tr><td><label class=\"detalles-ent\"> Municipio: </label></td><td> <label>" + 
+                (datos['Town']) + "</td><br> "+
+                "<tr><td><label class=\"detalles-ent\"> Tel&eacute;fono: </label></td><td><label>" + 
+                (datos['Telephone']) + "</td></tr> "+
+                "<tr><td><label class=\"detalles-ent\"> Horario: </label></td><td><label>" + 
+                (datos['Schedule']) + "</td></tr>"+
+                "<tr><td><label class=\"detalles-ent\"> P&aacute;gina web: </label> </td><td><label>" + 
+                (datos['WebPage']) + "</td></tr> "+
+              "</table></div>" + 
+              "<center><div class=\"details-geo\">" + (datos['Geolocation']) + "</center></div>";
+      document.getElementById(d).innerHTML += s;
+      clicked = true;
+    }
+    else{
+      //Si se vuelve a dar clic, el div seleccionado regresa a su estado sin detalles
+      document.getElementById(d).innerHTML = "<label class=\"nombre-ent\">" + entidades[idEntidadSeleccionada]['Name'] + "</label>";
+      clicked = false;
+    }
 }

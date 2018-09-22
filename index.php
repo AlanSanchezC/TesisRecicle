@@ -71,7 +71,7 @@ if ($queryMateriales->num_rows > 0) {
     </form>
   </div>
 
-  <div class="col-8">
+  <div class="col-9">
     <p id="resultados"> </p>
   </div>
 </div>
