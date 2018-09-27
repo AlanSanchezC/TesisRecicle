@@ -11,6 +11,9 @@ body {
 	display: block;
 	text-align: center;
 	font-size: 50px;
+	background: #26284b;
+	color: #ffffff;
+	
 }
 
 ul{
@@ -27,7 +30,7 @@ button{
 	text-align: center;
 	font-size: 30px;
 	letter-spacing: 4px;
-	color: darkgreen;
+	color: rgb(255, 255, 255);
 }
 
 tr {
@@ -59,7 +62,7 @@ td:first-child{
 
 .datos-ent:hover {
 	cursor: pointer !important;
-	background-color: #f2f2f2;
+	background-color: #ffffff;
 }
 
 #mapa-ent{
@@ -81,3 +84,5 @@ td:first-child{
 .detalles-de-entidad tr td{
 	font-size: 22px;
 }
+
+/*Parte de la barra lateral*/
