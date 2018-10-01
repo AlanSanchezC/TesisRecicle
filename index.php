@@ -2,14 +2,18 @@
 <html lang="es">
 <head>
 
-	<meta charset="iso-8859-1" />
+	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Reciclar Colima</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/estilos.css">
-  
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head>
@@ -39,9 +43,18 @@ if ($queryMateriales->num_rows > 0) {
 } ?>
 
 </div>
-<br>
-<p id="material-actual"></p>
-<br>
+<br><br>
+
+<div class="inicio" style="display: block;">
+  <center>
+      <label class="principal"> &iquest;Qu&eacute; deseas reciclar? </label>
+      <img src="img/inicio-img.png">
+  </center>
+</div>
+
+<div id="material-actual"></div>
+
+<br><br>
 <div class="row"> 
   <div class="col-2.5" id="menu-lateral" style="display: none;">
     <form class="filtro">
@@ -76,10 +89,10 @@ if ($queryMateriales->num_rows > 0) {
   </div>
 
   <div class="col-9">
-    <p id="resultados"> </p>
+    <div id="resultados"></div>
   </div>
 </div>
-
+<p class="espaciado">&nbsp;</p>
 <script type="text/javascript" src="events.js"></script>
 
 <!-- Inicio del footer -->
@@ -88,9 +101,9 @@ if ($queryMateriales->num_rows > 0) {
             <div class="footer-main">
                 <div class="footer-columna">
                     <h3>Direcci&oacute;n</h3>
-                    <span class="fa fa-map-marker"><p>Av. Universidad No. 333, Las V&iacute;boras; CP 28040 Colima, Col.</p></span>
-                    <span class="fa fa-phone-square"><p>(312) 316 1000</p></span><br>
-                    <span class="fa fa-envelope"><p>correo@ucol.mx</p></span>
+                    <div class="fa fa-map-marker">&nbsp; Av. Universidad No. 333, Las V&iacute;boras; CP 28040 Colima, Col.</div>
+                    <div class="fa fa-phone-square">&nbsp;(312) 316 1000</div><br>
+                    <div class="fa fa-envelope">&nbsp;correo@ucol.mx</div>
                 </div>
                 <div class="footer-columna">
                     <h3>Misi&oacute;n</h3>

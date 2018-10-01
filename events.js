@@ -1,7 +1,6 @@
-var entidades = {};
-var clicked = false;
-  
 $(document).ready(function() {
+  var inicio = "";
+
   ///////////////Evento que se ejecuta al dar click en un botón del menú de filtro
 
   $("#menu-lateral :button").click(function(){
@@ -25,6 +24,7 @@ $(document).ready(function() {
   ///////////////Evento que se ejecuta al dar click en un botón de algún material en la barra superior
 
   $('#materiales :button').click(function() {
+      
       $("#check1").prop('checked', true);
       $("#check2").prop('checked', true);
 
@@ -40,62 +40,63 @@ $(document).ready(function() {
         data: { "MaterialID": $(this).attr('id')},
         dataType: "json",
         success: function(entidad){ 
-          //Se guarda el resultado de la query por material
-          entidades = entidad;
+          
+          //Muestra el material seleccionado
+          $('#material-actual').text(entidad[0]['MaterialName'])
+              .fadeIn();
 
-          //Se muestra el menú de filtro y el material seleccionado
-          document.getElementById('menu-lateral').style.display = "block"; 
-          document.getElementById('material-actual').innerHTML = entidad[0]['MaterialName'];
+          //Se muestra el menú de filtro
+          $('.inicio').fadeOut().promise().done(function(){
+             $('#menu-lateral').fadeIn(); 
+         
+          /////////Resultados de la búsqueda
+            var contenido = document.getElementById('resultados');
+            contenido.innerHTML = "";
 
-          //Resultados de la búsqueda
-          var contenido = document.getElementById('resultados');
-          contenido.innerHTML = "";
+            var s = "<div id=\"accordion\">";
+            var i = 0;
 
-          for(var i in entidad){
+            for(var e in entidad){
+              //Se muestran los nombres de las entidades como "cards" y el contenido de cada una
+              
+              s += "<div class=\"card\">"+
+                      "<div class=\"card-header\" id=\"heading"+ i +"\" data-toggle=\"collapse\" data-target=\"#collapse"+ i +"\">" + 
+                        "<h5 class=\"mb-0\">"+
+                          "<label class=\"nombre-ent\" aria-expanded=\"false\" aria-controls=\"collapse"+ i +"\">" +
+                                entidad[e]['Name'] +
+                          "</label>"+
+                        "</h5>"+
+                      "</div>" +
 
-            var s = "<div class=\"datos-ent\" onClick=\"verEntidad(" + i + ", this)\" id=\"ee" + (entidad[i]['InstitutionID'])  + "\" >"+
-                          "<label class=\"nombre-ent\"> " + (entidad[i]['Name']) + "</label> " +
-                          
-                      "</div>"+
-                    " <br>";
-            contenido.innerHTML = contenido.innerHTML + s;
-          }
+                      "<div id=\"collapse"+ i +"\" class=\"collapse\" aria-labelledby=\"heading"+ i +"\" data-parent=\"#accordion\">" +
+                        "<div class=\"card-body\">"+
+
+                          "<label class=\"detalles-ent\"> Direcci&oacute;n: </label> " + 
+                          (entidad[e]['Address']) + "<br>" +
+                          "<label class=\"detalles-ent\"> Municipio: </label> " + 
+                          (entidad[e]['Town']) +"<br>" +
+                          "<label class=\"detalles-ent\"> Tel&eacute;fono: </label> " + 
+                          (entidad[e]['Telephone']) + "<br>" +
+                          "<label class=\"detalles-ent\"> Horario: </label> " + 
+                          (entidad[e]['Schedule']) + "<br>" +
+                          "<label class=\"detalles-ent\"> P&aacute;gina web: </label> " + 
+                          (entidad[e]['WebPage']) + "<br>" +
+                          "<center><div class=\"details-geo\">" + (entidad[e]['Geolocation']) + "</center></div>" +
+                        "</div>"+
+                    "</div><br>";
+              i++;
+            }
+            s += "</div>";
+              //Se agregan a la vista con un delay para cada span
+              contenido.innerHTML = contenido.innerHTML + s;
+
+              $(".card").each(function(index) {
+                  $(this).delay(200*index).hide().fadeIn();
+              });
+         });
         }
       }); 
-
     });
 
 
 });
-
-///////////////Evento onClick para ver los detalles de una entidad
-
-function verEntidad(idEntidadSeleccionada, divSeleccionado){
-    var d = divSeleccionado.id;
-    if (!clicked){
-      var datos = entidades[idEntidadSeleccionada];
-      
-      //Se muestran los detalles y el iframe con el mapa
-      var s = 
-              "<div><table>" +
-                "<tr><td><label class=\"detalles-ent\"> Direcci&oacute;n: </label> </td> <td> <label>" + 
-                (datos['Address'])+ "</td></tr> "+
-                "<tr><td><label class=\"detalles-ent\"> Municipio: </label></td><td> <label>" + 
-                (datos['Town']) + "</td><br> "+
-                "<tr><td><label class=\"detalles-ent\"> Tel&eacute;fono: </label></td><td><label>" + 
-                (datos['Telephone']) + "</td></tr> "+
-                "<tr><td><label class=\"detalles-ent\"> Horario: </label></td><td><label>" + 
-                (datos['Schedule']) + "</td></tr>"+
-                "<tr><td><label class=\"detalles-ent\"> P&aacute;gina web: </label> </td><td><label>" + 
-                (datos['WebPage']) + "</td></tr> "+
-              "</table></div>" + 
-              "<center><div class=\"details-geo\">" + (datos['Geolocation']) + "</center></div>";
-      document.getElementById(d).innerHTML += s;
-      clicked = true;
-    }
-    else{
-      //Si se vuelve a dar clic, el div seleccionado regresa a su estado sin detalles
-      document.getElementById(d).innerHTML = "<label class=\"nombre-ent\">" + entidades[idEntidadSeleccionada]['Name'] + "</label>";
-      clicked = false;
-    }
-}
