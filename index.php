@@ -40,6 +40,7 @@ if ($queryMateriales->num_rows > 0) {
 
 </div>
 <br>
+<!-- Inicio del filtro -->
 <p id="material-actual"></p>
 <br>
 <div class="row"> 
@@ -61,7 +62,7 @@ if ($queryMateriales->num_rows > 0) {
         <br><br>
       
 
-        <label> Modalidad </label><br>
+        <!--<label> Modalidad </label><br>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="check1" name="checkbox_name[]" required>
           <label class="form-check-label" for="check1">Recibir</label>
@@ -70,7 +71,7 @@ if ($queryMateriales->num_rows > 0) {
           <input class="form-check-input" type="checkbox" id="check2" name="checkbox_name[]" required>
           <label class="form-check-label" for="check2">Recoger</label>
         </div>
-        <br><br>
+        <br><br>-->
         <button type="button" class="btn btn-primary">Filtrar</button>
     </form>
   </div>

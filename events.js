@@ -8,10 +8,10 @@ $(document).ready(function() {
 
       checked = $("input[type=checkbox]:checked").length;
 
-      if(!checked) {
+      /*if(!checked) {
         alert("Debes seleccionar una modalidad.");
         return false;
-      }
+      }*/
 
     var municipio = $("#municipio").val();
     var servicio = "RECIBE-y-RECOGE";
