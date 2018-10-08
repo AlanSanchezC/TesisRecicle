@@ -18,7 +18,15 @@
 
 </head>
 <body style="background-color:#15162f;">
-<label class="titulo"> ReciclarColima </label>
+
+<!-- Aqui se muestra el icono del logo -->
+<div class="titulo">
+  <center>
+      <img style="width:90px; height:90px;" src="img/logo.png">
+      <label class="principal"> Reciclar Colima </label>
+  </center>
+</div>
+<!-- Aqui termina el icono del logo -->
 
 <br>
 
@@ -43,6 +51,12 @@ if ($queryMateriales->num_rows > 0) {
 } ?>
 
 </div>
+
+<br>
+<!-- Inicio del filtro -->
+<p id="material-actual"></p>
+<br>
+
 <br><br>
 
 <div class="inicio" style="display: block;">
@@ -55,6 +69,7 @@ if ($queryMateriales->num_rows > 0) {
 <div id="material-actual"></div>
 
 <br><br>
+
 <div class="row"> 
   <div class="col-2.5" id="menu-lateral" style="display: none;">
     <form class="filtro">
@@ -74,7 +89,7 @@ if ($queryMateriales->num_rows > 0) {
         <br><br>
       
 
-        <label> Modalidad </label><br>
+        <!--<label> Modalidad </label><br>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="check1" name="checkbox_name[]" required>
           <label class="form-check-label" for="check1">Recibir</label>
@@ -83,8 +98,8 @@ if ($queryMateriales->num_rows > 0) {
           <input class="form-check-input" type="checkbox" id="check2" name="checkbox_name[]" required>
           <label class="form-check-label" for="check2">Recoger</label>
         </div>
-        <br><br>
-        <button type="button" class="btn btn-primary">Filtrar</button>
+        <br><br>-->
+        <button type="button" id="filtrar" class="btn btn-primary">Filtrar</button>
     </form>
   </div>
 
@@ -93,6 +108,7 @@ if ($queryMateriales->num_rows > 0) {
   </div>
 </div>
 <p class="espaciado">&nbsp;</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="events.js"></script>
 
 <!-- Inicio del footer -->
@@ -128,6 +144,5 @@ if ($queryMateriales->num_rows > 0) {
         </div>
     </footer>
 <!-- Fin del footer -->
-
 </body>
 </html>

@@ -1,16 +1,17 @@
 $(document).ready(function() {
-  var inicio = "";
+  var inicio = ""
+  var town = ""
 
-  ///////////////Evento que se ejecuta al dar click en un botón del menú de filtro
+  /*Evento que se ejecuta al dar click en un botón del menú de filtro*/
 
   $("#menu-lateral :button").click(function(){
 
       checked = $("input[type=checkbox]:checked").length;
 
-      if(!checked) {
-        alert("Debes seleccionar una modalidad.");
-        return false;
-      }
+      // if(!checked) {
+      //   alert("Debes seleccionar una modalidad.");
+      //   return false;
+      // }
 
     var municipio = $("#municipio").val();
     var servicio = "RECIBE-y-RECOGE";
@@ -21,19 +22,24 @@ $(document).ready(function() {
     }
   });
 
-  ///////////////Evento que se ejecuta al dar click en un botón de algún material en la barra superior
+   /*Me trae el valor a comparar del checkbox*/
+   $('#municipio').on('change', function(){
+     town = $('#municipio').val()
+   })
+
+  /*Evento que se ejecuta al dar click en un botón de algún material en la barra superior*/
 
   $('#materiales :button').click(function() {
       
       $("#check1").prop('checked', true);
       $("#check2").prop('checked', true);
 
-      //Evento cuando se da click en un botón, solo uno esta "activo"
+      /*Evento cuando se da click en un botón, solo uno esta "activo"*/
       $(this).addClass('active')
       .siblings('[type="button"]')
           .removeClass('active').addClass('btn-smallD');
 
-      //Búsqueda de entidades por material
+      /*Búsqueda de entidades por material*/
       $.ajax({
         url: "getdata.php",
         type: "POST",
@@ -41,25 +47,25 @@ $(document).ready(function() {
         dataType: "json",
         success: function(entidad){ 
           
-          //Muestra el material seleccionado
+          /*Muestra el material seleccionado*/
           $('#material-actual').text(entidad[0]['MaterialName'])
               .fadeIn();
 
-          //Se muestra el menú de filtro
+          /*Se muestra el menú de filtro*/
           $('.inicio').fadeOut().promise().done(function(){
              $('#menu-lateral').fadeIn(); 
          
-          /////////Resultados de la búsqueda
+          /*Resultados de la búsqueda*/
             var contenido = document.getElementById('resultados');
             contenido.innerHTML = "";
 
-            var s = "<div id=\"accordion\">";
+            var templateString = "<div id=\"accordion\">";
             var i = 0;
-
+            console.log(entidad)
             for(var e in entidad){
-              //Se muestran los nombres de las entidades como "cards" y el contenido de cada una
+              /*Se muestran los nombres de las entidades como "cards" y el contenido de cada una*/
               
-              s += "<div class=\"card\">"+
+              templateString += "<div class=\"card\">"+
                       "<div class=\"card-header\" id=\"heading"+ i +"\" data-toggle=\"collapse\" data-target=\"#collapse"+ i +"\">" + 
                         "<h5 class=\"mb-0\">"+
                           "<label class=\"nombre-ent\" aria-expanded=\"false\" aria-controls=\"collapse"+ i +"\">" +
@@ -86,13 +92,55 @@ $(document).ready(function() {
                     "</div><br>";
               i++;
             }
-            s += "</div>";
+            templateString += "</div>";
               //Se agregan a la vista con un delay para cada span
-              contenido.innerHTML = contenido.innerHTML + s;
+              contenido.innerHTML = contenido.innerHTML + templateString;
 
               $(".card").each(function(index) {
                   $(this).delay(200*index).hide().fadeIn();
               });
+
+              /*Se genera el filtrado de las entidades*/
+
+              let filtrado = $('#filtrar')
+              filtrado.on('click', e => {
+                contenido.innerHTML = " "
+                templateString = " "
+                entidad.map(empresa => {
+                  if (town === empresa.Town){
+                    templateString += "<div class=\"card\">"+
+                      "<div class=\"card-header\" id=\"heading"+ i +"\" data-toggle=\"collapse\" data-target=\"#collapse"+ i +"\">" + 
+                        "<h5 class=\"mb-0\">"+
+                          "<label class=\"nombre-ent\" aria-expanded=\"false\" aria-controls=\"collapse"+ i +"\">" +
+                                empresa['Name'] +
+                          "</label>"+
+                        "</h5>"+
+                      "</div>" +
+
+                      "<div id=\"collapse"+ i +"\" class=\"collapse\" aria-labelledby=\"heading"+ i +"\" data-parent=\"#accordion\">" +
+                        "<div class=\"card-body\">"+
+
+                          "<label class=\"detalles-ent\"> Direcci&oacute;n: </label> " + 
+                          (empresa['Address']) + "<br>" +
+                          "<label class=\"detalles-ent\"> Municipio: </label> " + 
+                          (empresa['Town']) +"<br>" +
+                          "<label class=\"detalles-ent\"> Tel&eacute;fono: </label> " + 
+                          (empresa['Telephone']) + "<br>" +
+                          "<label class=\"detalles-ent\"> Horario: </label> " + 
+                          (empresa['Schedule']) + "<br>" +
+                          "<label class=\"detalles-ent\"> P&aacute;gina web: </label> " + 
+                          (empresa['WebPage']) + "<br>" +
+                          "<center><div class=\"details-geo\">" + (empresa['Geolocation']) + "</center></div>" +
+                        "</div>"+
+                    "</div><br>";
+                    contenido.innerHTML = templateString
+                  }else{
+                    templateString = `<p align="center" style="color:white;">No hay contenido</p>`
+                    contenido.innerHTML = templateString
+                  }
+                })
+              })
+
          });
         }
       }); 

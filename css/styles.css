@@ -29,9 +29,10 @@ button{
 }
 
 .principal{
-	color: white;
+	color: rgb(98, 223, 26);
 	font-size: 40px;
 	display: inline-block;
+	font: small-caps 100%/200% serif;
 }
 
 #material-actual{
