@@ -26,7 +26,7 @@ $queryTodas = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialNam
 					"WebPage" => utf8_encode($row["WebPage"]),
 					"MaterialName" => utf8_encode($row["MaterialName"]),
 					"Geolocation" => utf8_encode($row["Geolocation"])
-    		);
+			);
 		}
 	
 	echo json_encode($arr)

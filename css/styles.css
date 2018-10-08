@@ -1,0 +1,76 @@
+body {
+	font-family: 'Helvetica';
+}
+
+.details, .details-geo{
+	display: inline-block;
+}
+
+.titulo {
+	display: block;
+	text-align: center;
+	font-size: 50px;
+	background: #26284b;
+	color: #ffffff;
+}
+
+ul{
+	margin-left: 10px;
+}
+
+button{
+	margin-left: 5px !important;
+	margin-top: 5px !important;
+	font-weight: lighter !important;
+}
+
+.inicio{
+	margin-top: 40px;
+}
+
+.principal{
+	color: rgb(98, 223, 26);
+	font-size: 40px;
+	display: inline-block;
+	font: small-caps 100%/200% serif;
+}
+
+#material-actual{
+	text-align: center;
+	font-size: 30px;
+	color: rgb(255, 255, 255);
+}
+
+.filtro{
+	background-color: white;
+	padding: 20px;
+	font-size: 15px;
+	border: solid 2px green;
+	margin-left: 20px;
+}
+
+.row{
+	width: 100%;
+}
+
+.card-header {
+	cursor: pointer;
+}
+
+.nombre-ent {
+	margin-left: 20px;
+	font-size: 25px;
+	color:#4b4c71;
+	line-height: 1.5;
+	font-weight: normal;
+}
+
+.detalles-ent{
+	margin-left: 20px;
+	font-weight: bold;
+	color: #607de4;;	
+}
+
+.espaciado{
+	line-height: 25;
+}
