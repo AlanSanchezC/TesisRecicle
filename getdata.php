@@ -5,10 +5,11 @@ require('config/db.php');
 
 // ************  Búsqueda de entidades por material reciclable en tabla Servicio
 
-$queryTodas = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialName, INSTITUTION.* " .
+$queryTodas = $connect->query("SELECT SERVICE.ServiceName, SERVICE.MaterialID, SERVICE.InstitutionID, RECYCLABLE_MATERIAL.MaterialName, INSTITUTION.Name, INSTITUTION.Address, INSTITUTION.Schedule, INSTITUTION.Telephone, INSTITUTION.Town, INSTITUTION.WebPage, INSTITUTION.Geolocation, TRANSACTION.Recompensa " .
               " FROM SERVICE " .
               " INNER JOIN RECYCLABLE_MATERIAL ON SERVICE.MaterialID = RECYCLABLE_MATERIAL.MaterialID " .
               " INNER JOIN INSTITUTION ON SERVICE.InstitutionID = INSTITUTION.InstitutionID " .
+              " LEFT JOIN TRANSACTION ON SERVICE.ServiceID = TRANSACTION.ServiceID " .
               " WHERE SERVICE.MaterialID = ".$_POST["MaterialID"].";");
 
 	$arr = array();
@@ -25,7 +26,8 @@ $queryTodas = $connect->query("SELECT SERVICE.*, RECYCLABLE_MATERIAL.MaterialNam
 					"ServiceName" => utf8_encode($row["ServiceName"]),
 					"WebPage" => utf8_encode($row["WebPage"]),
 					"MaterialName" => utf8_encode($row["MaterialName"]),
-					"Geolocation" => utf8_encode($row["Geolocation"])
+					"Geolocation" => utf8_encode($row["Geolocation"]),
+					"Recompensa" => utf8_encode($row["Recompensa"])
 			);
 		}
 	

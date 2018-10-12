@@ -55,9 +55,6 @@ if ($queryMateriales->num_rows > 0) {
 <br>
 <!-- Inicio del filtro -->
 <p id="material-actual"></p>
-<br>
-
-<br><br>
 
 <div class="inicio" style="display: block;">
   <center>
@@ -68,45 +65,48 @@ if ($queryMateriales->num_rows > 0) {
 
 <div id="material-actual"></div>
 
-<br><br>
+<br>
 
-<div class="row"> 
-  <div class="col-2.5" id="menu-lateral" style="display: none;">
-    <form class="filtro">
-      Municipio <br>
-        <select class="custom-select" id="municipio">
-          <option selected>Elige uno...</option>
-         	<?php
-          		$queryMunicipios = $connect->query("SELECT DISTINCT(TOWN) FROM INSTITUTION");
-				if ($queryMunicipios->num_rows > 0) {
-					while($row = $queryMunicipios->fetch_assoc()) {
-          	?>
-          <option value="<?=$row["TOWN"]?>"> <?=$row["TOWN"]?></option>
-          		<?php
-					}
-				} ?>
-        </select>
-        <br><br>
-      
 
-        <!--<label> Modalidad </label><br>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="check1" name="checkbox_name[]" required>
-          <label class="form-check-label" for="check1">Recibir</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="check2" name="checkbox_name[]" required>
-          <label class="form-check-label" for="check2">Recoger</label>
-        </div>
-        <br><br>-->
-        <button type="button" id="filtrar" class="btn btn-primary">Filtrar</button>
-    </form>
-  </div>
 
-  <div class="col-9">
-    <div id="resultados"></div>
-  </div>
+<div class="row">
+    <div class="col-2.5" id="menu-lateral" style="display: none;">
+      <form class="filtro">
+        <label class="mun"> Municipio </label><br>
+          <select class="custom-select" id="municipio">
+            <option value="all" selected>Todos</option>
+           	<?php
+            		$queryMunicipios = $connect->query("SELECT DISTINCT(TOWN) FROM INSTITUTION");
+  				if ($queryMunicipios->num_rows > 0) {
+  					while($row = $queryMunicipios->fetch_assoc()) {
+            	?>
+            <option value="<?=$row["TOWN"]?>"> <?=$row["TOWN"]?></option>
+            		<?php
+  					}
+  				} ?>
+          </select>
+          <br><br>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="check1" value="option1">
+            <label class="form-check-label" for="inlineCheckbox1">Recompensa </label>
+          </div>
+          <br id="salto">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="check2" value="option2">
+            <label class="form-check-label" for="inlineCheckbox2">Servicio a domicilio </label>
+          </div>
+          <br><br>
+          <center><button type="button" id="filtrar" class="btn btn-primary">Filtrar</button></center>
+      </form>
+
+
+    </div>
+
+    <div class="col" id="contenido">
+      <div id="resultados"></div>
+    </div>
 </div>
+
 <p class="espaciado">&nbsp;</p>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="events.js"></script>
